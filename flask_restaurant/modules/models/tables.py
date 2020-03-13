@@ -1,7 +1,7 @@
 from modules.__init__ import db
 
 
-class Waiter(db.Colunm):
+class Waiter(db.Model):
     __tablename__ = "waiters"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -41,7 +41,7 @@ class Tables(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     number = db.Column(db.Integer, unique=True)
-    waiter_id = db.Column(db.Integer, db.ForeignKey('waiter.id'))
+    waiter_id = db.Column(db.Integer, db.ForeignKey('waiters.id'))
     is_occupied = db.Column(db.Boolean)
 
     user = db.relationship('Waiter', foreign_keys=waiter_id)
@@ -61,12 +61,14 @@ class Dish(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)
     price = db.Column(db.String)
+    ingredientes = db.Column(db.String)
     image = db.Column(db.String)
     number_asked = db.Column(db.Integer)
 
-    def __init__(self, name, price, image, number_asked=0):
+    def __init__(self, name, price, ingredientes, image, number_asked=0):
         self.name = name
         self.price = price
+        self.ingredientes = ingredientes
         self.image = image
         self.number_asked = number_asked
 
