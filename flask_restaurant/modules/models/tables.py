@@ -61,19 +61,31 @@ class Dish(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)
     price = db.Column(db.String)
-    ingredientes = db.Column(db.String)
+    ingredients = db.Column(db.String)
     image = db.Column(db.String)
+    serves = db.Column(db.Integer)
     number_asked = db.Column(db.Integer)
 
-    def __init__(self, name, price, ingredientes, image, number_asked=0):
+    def __init__(self, name, price, ingredients, image, serves=0, number_asked=0):
         self.name = name
         self.price = price
-        self.ingredientes = ingredientes
+        self.ingredients = ingredients
         self.image = image
+        self.serves = serves
         self.number_asked = number_asked
 
     def __repr__(self):
         return "Dish: %r" % self.name
 
-    def getPrice(self):
-        return "Price: %r" % self.price
+    def getDishes():
+        dishes = {}
+        for dish in Dish.query.order_by(Dish.id).all():
+            dish_dict = {
+                'Price': dish.price,
+                'Igredientes': dish.ingredients,
+                'img': dish.image,
+                'Serves': dish.serves,
+                'number_asked': dish.number_asked
+            }
+            dishes[dish.name] = dish_dict
+        return dishes

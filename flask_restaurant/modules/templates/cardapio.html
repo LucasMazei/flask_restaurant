@@ -3,20 +3,20 @@
 <div class="album py-5 bg-light">
   <div class="container">
     <div class="row">
-      {% for prato in pratos['Massas'].keys() %}
+      {% for dish in dishes.keys() %}
       <div class="col-md-4">
         <div height="225" width="225" class="card mb-4 shadow-sm">
           <img
             class="bd-placeholder-img card-img-top"
-            src="{{ url_for('static', filename='img/'+pratos['Massas'][prato]['img']) }}"
+            src="{{ url_for('static', filename='img/dishes/'+dishes[dish]['img']) }}"
           />
 
           <div class="card-body">
-            <p class="btn btn-primary btn-block">Prato: {{ prato }}</p>
+            <p class="btn btn-primary btn-block">Prato: {{ dish }}</p>
             <p class="card-text" style="text-align: center;">
-              Preço: {{ pratos['Massas'][prato]['Preço'] }}
+              Preço: {{ dishes[dish]['Price'] }}
               <br />
-              Serve: {{ pratos['Massas'][prato]['Serve'] }}
+              Serve: {{ dishes[dish]['Serves'] }}
             </p>
             <div
               class="btn-group"

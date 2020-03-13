@@ -71,57 +71,38 @@ def home():
 
 @app.route("/cardapio")
 def cardapio():
-    pratos = {
-        'Massas': {
-            'Miojo': {
-                'Preço': 5.00,
-                'Serve': 1,
-                'Igredientes': '',
-                'img': 'miojo.png'
-            },
-            'Cup Noodles': {
-                'Preço': 7.00,
-                'Serve': 1,
-                'Igredientes': '',
-                'img': 'cup_noodles.png'
-            }
-        },
-        'Bebidas': {
-            'Cerveja': {
-                'Preço': 6.00,
-                'Serve': 1,
-                'Igredientes': '',
-                'img': 'cup_noodles.png'
-            }
-        }
-    }
-    return render_template("cardapio.html", pratos=pratos)
+    dishes = Dish.getDishes()
+    print(dishes)
+    return render_template("cardapio.html", dishes=dishes)
 
 
 @app.route("/cadastrar_prato", methods=['GET', 'POST'])
 def cadastrar_prato():
     form = RegisterDish()
 
-#    if form.validate_on_submit():
+    # if form.validate_on_submit():
     if request.method == 'POST':
         name = form.name.data
         price = form.price.data
-        ingredientes = form.ingredientes.data
+        ingredients = form.ingredients.data
         image = form.image.data
-        print(request.files)
-        print("image: ", image)
-        number_asked = form.number_asked.data
+        serves = form.serves.data
+        if form.number_asked.data:
+            number_asked = form.number_asked.data
+        else:
+            number_asked = 0
 
         filename = secure_filename(image.filename)
-        image.save(os.path.join('modules/static/img', filename))
 
         try:
-            new_dish = Dish(name, price, ingredientes, image, number_asked)
+            new_dish = Dish(name, price, ingredients,
+                            filename, serves, number_asked)
             db.session.add(new_dish)
             db.session.commit()
+            image.save(os.path.join('modules/static/img/dishes', filename))
             return redirect(url_for('index'))
-        except:
-            flash('Ocorreu um erro, verifique os dados e tente novamente.')
+        except Exception as e:
+            flash('Ocorreu um erro, verifique os dados e tente novamente: %s' % str(e))
     else:
         flash('Ocorreu um erro, verifique os dados e tente novamente.')
     return render_template("cadastrar_prato.html", form=form)

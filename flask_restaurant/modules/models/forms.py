@@ -20,6 +20,7 @@ class RegisterForm(FlaskForm):
 class RegisterDish(FlaskForm):
     name = StringField('name', validators=[DataRequired()])
     price = StringField('price', validators=[DataRequired()])
-    ingredientes = StringField('ingredientes', validators=[DataRequired()])
+    ingredients = StringField('ingredients', validators=[DataRequired()])
     image = FileField('image', validators=[FileRequired()])
-    number_asked = IntegerField('number_asked', validators=[DataRequired()])
+    serves = IntegerField('serves', validators=[DataRequired()])
+    number_asked = IntegerField('number_asked')

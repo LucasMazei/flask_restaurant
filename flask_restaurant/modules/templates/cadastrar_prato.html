@@ -13,12 +13,16 @@
     </div>
     <div class="form-group">
       <label>Igredientes</label>
-      {{ form.ingredientes(class="form-control", placeholder="Arroz, Feijão,
+      {{ form.ingredients(class="form-control", placeholder="Arroz, Feijão,
       Farofa, ...") }}
     </div>
     <div class="form-group">
       <label>Foto</label>
       {{ form.image(class="form-control") }}
+    </div>
+    <div class="form-group">
+      <label>Serve quantas pessoas</label>
+      {{ form.serves(class="form-control", placeholder="1") }}
     </div>
     <div class="form-group">
       <label>Número de vezes pedido</label>
